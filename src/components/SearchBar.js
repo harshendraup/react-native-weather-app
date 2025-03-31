@@ -12,7 +12,7 @@ const SearchBar = ({ onSearch }) => {
         value={city}
         onChangeText={setCity}
       />
-      <TouchableOpacity  style={{width: 70, height: 50, backgroundColor: 'blue'}} onPress={() => onSearch(city)}>
+      <TouchableOpacity  style={{width: 70, height: 50, backgroundColor: 'blue', alignItems: 'center', justifyContent: 'center', borderRadius: 5}} onPress={() => onSearch(city)}>
         <Text style={{color: 'white'}}>Search</Text>
       </TouchableOpacity>
     </View>

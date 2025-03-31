@@ -5,7 +5,6 @@ const WeatherCard = ({ weather }) => {
   if (!weather) return (
     <View style={styles.card}>
       <Text style={styles.city}>No Data Found</Text>
-      
     </View>
   );
 
@@ -19,7 +18,7 @@ const WeatherCard = ({ weather }) => {
 };
 
 const styles = StyleSheet.create({
-  card: { padding: 20, backgroundColor: "#4a90e2", borderRadius: 10, marginTop: 20 },
+  card: { padding: 20,  backgroundColor: "#4a90e2", borderRadius: 10, margin: 10, marginTop: 25 },
   city: { fontSize: 24, fontWeight: "bold", color: "#fff" },
   temp: { fontSize: 40, fontWeight: "bold", color: "#fff" },
   description: { fontSize: 18, color: "#fff" },

@@ -18,8 +18,7 @@ const HomeScreen = () => {
   }
 
   return (
-    <View>
-      <Text style={{color: 'red', fontSize: 24}}> Whether I am able to see</Text>
+    <View style={{marginTop:50}}>
       <SearchBar onSearch={handleSearch} />
       <WeatherCard weather={weather} />
     </View>

@@ -5,9 +5,6 @@ import HomeScreen from './screens/HomeScreen.js'
 const App = () => {
   return (
     <SafeAreaView>
-      <View>
-        <Text>Weather App</Text>
-      </View>
         <HomeScreen/>
     </SafeAreaView>
   );
