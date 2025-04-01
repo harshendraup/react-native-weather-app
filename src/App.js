@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { SafeAreaView, View, Button, StyleSheet } from "react-native";
 import HomeScreen from "./screens/HomeScreen";
-import { ThemeProvider, ThemeContext } from "./components/ThemeContext.js";
+import { ThemeProvider, ThemeContext } from "./components/context/ThemeContext.js";
 
 const App = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
 });
 
 export default () => (
+  
   <ThemeProvider>
     <App />
   </ThemeProvider>

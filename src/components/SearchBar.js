@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { View, TextInput, TouchableOpacity, Text, StyleSheet } from "react-native";
-import { ThemeContext } from "./ThemeContext.js"
+import { ThemeContext } from "./context/ThemeContext.js"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SearchBar = ({ onSearch }) => {

@@ -3,14 +3,14 @@ import { View, StyleSheet, Alert, TouchableOpacity, Text, Image } from "react-na
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SearchBar from "../components/SearchBar";
 import WeatherCard from "../components/WeatherCard";
-import { ThemeContext } from "../components/ThemeContext";
+import { ThemeContext } from "../components/context/ThemeContext";
 import DayIcon from '../../assets/day.png';
 import NightIcon from '../../assets/dayOff.png';
 
 const HomeScreen = () => {
   const [weather, setWeather] = useState(null);
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const [currentIcon, setCurrentIcon] = useState(DayIcon); // state for switching icons
+  const [currentIcon, setCurrentIcon] = useState(DayIcon); 
 
   useEffect(() => {
     const loadWeather = async () => {
@@ -31,7 +31,7 @@ const HomeScreen = () => {
     try {
       const response = await fetch(URL);
       const data = await response.json();
-
+      console.log(data)
       if (data.cod !== 200) {
         Alert.alert("Error", data.message);
         return;
