@@ -1,32 +1,90 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Text, Alert } from "react-native";
+import React, { useContext, useState, useEffect } from "react";
+import { View, StyleSheet, Alert, TouchableOpacity, Text, Image } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import SearchBar from "../components/SearchBar";
 import WeatherCard from "../components/WeatherCard";
-import { fetchWeather } from "../services/weatherService";
+import { ThemeContext } from "../components/ThemeContext";
+import DayIcon from '../../assets/day.png';
+import NightIcon from '../../assets/dayOff.png';
 
 const HomeScreen = () => {
   const [weather, setWeather] = useState(null);
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const [currentIcon, setCurrentIcon] = useState(DayIcon); // state for switching icons
 
+  useEffect(() => {
+    const loadWeather = async () => {
+      const lastCity = await AsyncStorage.getItem("lastCity");
+      if (lastCity) {
+        handleSearch(lastCity);
+      }
+    };
+    loadWeather();
+  }, []);
 
   const handleSearch = async (city) => {
-    const API_KEY = '824ca6506779e11438f5b9f10bff1fef';
-    const URL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=5a58bd47e7bf9d040c087a518656ae49&units=metric`;
-    await fetch(URL)
-    .then(response => response.json())
-    .then(res => setWeather(res))
-    .catch(error => Alert.alert('Error fetching weather data:', error));
-  }
+    if (!city.trim()) return;
+
+    const API_KEY = "824ca6506779e11438f5b9f10bff1fef";
+    const URL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
+
+    try {
+      const response = await fetch(URL);
+      const data = await response.json();
+
+      if (data.cod !== 200) {
+        Alert.alert("Error", data.message);
+        return;
+      }
+
+      setWeather(data);
+      await AsyncStorage.setItem("lastCity", city);
+    } catch (error) {
+      Alert.alert("Error", "Failed to fetch weather data.");
+    }
+  };
+
+  const handleToggleTheme = () => {
+    toggleTheme(); 
+    setCurrentIcon(theme === "dark" ? DayIcon : NightIcon); 
+  };
 
   return (
-    <View style={{marginTop:50}}>
+    <View style={[styles.container, theme === "dark" && styles.darkBackground]}>
       <SearchBar onSearch={handleSearch} />
       <WeatherCard weather={weather} />
+      <TouchableOpacity style={styles.toggleButton} onPress={handleToggleTheme}>
+        <Image source={currentIcon} style={styles.icon} />
+        <Text style={[styles.buttonText, theme === "dark" && styles.darkText]}>Toggle Theme</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center", padding: 20 },
+  container: { flex: 1, justifyContent: "center", alignItems: "center"},
+  darkBackground: { backgroundColor: "#333" },
+  toggleButton: {
+    flexDirection: "row", 
+    alignItems: "center", 
+    backgroundColor: "#808080", 
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 30,
+    marginTop: 20,
+  },
+  icon: {
+    width: 20, 
+    height: 20, 
+    marginRight: 10, 
+  },
+  buttonText: {
+    fontSize: 16,
+    color: "#fff",
+  },
+  darkText: {
+    color: "#000", 
+  },
 });
 
 export default HomeScreen;

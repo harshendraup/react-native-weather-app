@@ -1,13 +1,25 @@
-import React from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
-import HomeScreen from './screens/HomeScreen.js'
+import React, { useContext } from "react";
+import { SafeAreaView, View, Button, StyleSheet } from "react-native";
+import HomeScreen from "./screens/HomeScreen";
+import { ThemeProvider, ThemeContext } from "./components/ThemeContext.js";
 
 const App = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+
   return (
-    <SafeAreaView>
-        <HomeScreen/>
+    <SafeAreaView style={[styles.container, theme === "dark" && styles.containerDark]}>
+      <HomeScreen />
     </SafeAreaView>
   );
 };
 
-export default App;
+const styles = StyleSheet.create({
+  container: { flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#fff" },
+  containerDark: { backgroundColor: "#222" },
+});
+
+export default () => (
+  <ThemeProvider>
+    <App />
+  </ThemeProvider>
+);

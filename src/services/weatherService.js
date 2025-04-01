@@ -22,7 +22,7 @@ export const fetchWeather = () => {
   fetch(URL)
   .then(response => {
     Alert.alert("Hello I am in api call", response.json());
-    // r
+    console.log(response.json())
   })
   .catch(error => Alert.alert('Error fetching weather data:', error));
 
