@@ -4,12 +4,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import SearchBar from "../components/SearchBar";
 import WeatherCard from "../components/WeatherCard";
 import { ThemeContext } from "../components/context/ThemeContext";
+import { WeatherContext } from "../components/context/weatherContext";
 import DayIcon from '../../assets/day.png';
 import NightIcon from '../../assets/dayOff.png';
 
 const HomeScreen = () => {
-  const [weather, setWeather] = useState(null);
   const { theme, toggleTheme } = useContext(ThemeContext);
+  const {weather, setWeather} = useContext(WeatherContext);
   const [currentIcon, setCurrentIcon] = useState(DayIcon); 
 
   useEffect(() => {
